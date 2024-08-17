@@ -23,6 +23,8 @@ from bs4 import BeautifulSoup
 from unidecode import unidecode
 import re
 
+nltk.download('stopwords')
+
 #####     CONSTANTS     #####
 OPENAI_APIKEY = st.secrets["OPENAI_API_KEY"]
 COLOR_BLUE = '#0038a8'
