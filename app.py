@@ -124,7 +124,8 @@ def generate_response(task, prompt, llm):
         messages=[
             {'role': 'system', 'content': f"Perform the specified task: {task}"},
             {'role': 'user', 'content': prompt}
-        ]
+        ],
+        # temperature=0
     )
 
     return response.choices[0].message.content
@@ -146,15 +147,15 @@ def ask_query(Q, llm, k=7, collection=None, age_group=None):
     # Get the text of the documents
     text = query_result['documents'][0][0]
 
-    # Get link and title to the first source of the document
-    first_result = query_result['metadatas'][0][0]
-    reference = f"[{first_result['title']}]({first_result['url']})"
+    # Get the reference of the documents
+    references = list(set([f"[{result['title']}]({result['url']})" for result in query_result['metadatas'][0]]))
+    reference_str = "\n\n".join(references)
 
     # Pass into GPT to get a better formatted response to the question
     response = generate_response_to_question(Q, text, llm=llm, age_group=age_group)
+    # return Markdown(response)
     
-    # Add main source
-    response += f"\n\nSource(s):\n{reference}"
+    response += f"\n\n**Source(s):**\n\n{reference_str}"
 
     return response
 
