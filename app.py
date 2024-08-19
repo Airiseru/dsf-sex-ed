@@ -134,7 +134,7 @@ def generate_response_to_question(Q, text, llm, age_group):
     """Generalized function to answer a question"""
     prompt = f"""
     Provide the answer on {Q} to a {age_group} based on this context:\n\n{text}.
-    You should only respond based on the given context and don't respond if you don't know the answer. Only answer what is directly being asked. If it's not age appropriate, explicityly mention that.
+    You should only respond based on the given context and don't respond if you don't know the answer. Only answer what is directly being asked. If it's not age appropriate, explicitly mention that.
     """
     response = generate_response(Q, prompt, llm)
     return response
